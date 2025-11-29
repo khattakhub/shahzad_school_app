@@ -1,0 +1,248 @@
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+}
+
+.dashboard-welcome h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-date {
+    text-align: right;
+}
+
+.dashboard-date-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.dashboard-date-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card-bg {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 6rem;
+    height: 6rem;
+    border-bottom-left-radius: 100%;
+    opacity: 0.1;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover .stat-card-bg {
+    transform: scale(1.2);
+}
+
+.stat-icon-wrapper {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.25rem;
+    color: white;
+    box-shadow: var(--shadow-md);
+    flex-shrink: 0;
+}
+
+.stat-content p {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.stat-content h3 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1;
+}
+
+.chart-card {
+    height: 100%;
+}
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.chart-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.chart-container {
+    height: 18rem;
+    width: 100%;
+    position: relative;
+}
+
+.pie-center-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    text-align: center;
+}
+
+.pie-count {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.pie-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.action-card {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.action-card:hover {
+    border-color: var(--primary-light);
+}
+
+.action-card-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.action-card:hover .action-card-bg {
+    opacity: 0.05;
+}
+
+.action-icon-wrapper {
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: white;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease;
+}
+
+.action-card:hover .action-icon-wrapper {
+    transform: scale(1.1);
+}
+
+.action-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.action-desc {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.action-link {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--primary);
+    transition: transform 0.3s ease;
+}
+
+.action-card:hover .action-link {
+    transform: translateX(0.5rem);
+}
+
+/* Colors for stats */
+.bg-blue {
+    background-color: #3b82f6;
+}
+
+.bg-emerald {
+    background-color: #10b981;
+}
+
+.bg-purple {
+    background-color: #8b5cf6;
+}
+
+.bg-orange {
+    background-color: #f97316;
+}
+
+.bg-indigo {
+    background-color: #6366f1;
+}
+
+.bg-pink {
+    background-color: #ec4899;
+}
+
+.text-blue {
+    color: #3b82f6;
+}
+
+.text-emerald {
+    color: #10b981;
+}
+
+.text-purple {
+    color: #8b5cf6;
+}
+
+.text-orange {
+    color: #f97316;
+}
+
+.text-indigo {
+    color: #6366f1;
+}
+
+.text-pink {
+    color: #ec4899;
+}
