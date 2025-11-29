@@ -3,11 +3,13 @@ import { Save, CheckCircle, XCircle, Clock } from 'lucide-react';
 import { dataStore } from '../data/store';
 import './Dashboard.css';
 
+import { useToast } from '../context/ToastContext';
+
 const AttendancePage = ({ currentUser }) => {
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [students, setStudents] = useState([]);
     const [attendance, setAttendance] = useState({});
-    const [saved, setSaved] = useState(false);
+    const { addToast } = useToast();
 
     const classId = currentUser?.classId || 'c1';
 
@@ -26,18 +28,15 @@ const AttendancePage = ({ currentUser }) => {
             students.forEach(s => initial[s.id] = 'present');
             setAttendance(initial);
         }
-        setSaved(false);
     }, [date, students, classId]);
 
     const handleStatusChange = (studentId, status) => {
         setAttendance(prev => ({ ...prev, [studentId]: status }));
-        setSaved(false);
     };
 
     const handleSave = () => {
         dataStore.saveAttendance(date, classId, attendance);
-        setSaved(true);
-        setTimeout(() => setSaved(false), 3000);
+        addToast('Success', 'Attendance saved successfully!', 'success');
     };
 
     const StatusButton = ({ status, current, onClick, icon: Icon, label, colorVar }) => {
@@ -82,12 +81,12 @@ const AttendancePage = ({ currentUser }) => {
                         className="btn btn-primary"
                     >
                         <Save size={18} />
-                        {saved ? 'Saved!' : 'Save Attendance'}
+                        Save Attendance
                     </button>
                 </div>
             </div>
 
-            <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+            <div className="card desktop-only" style={{ padding: 0, overflow: 'hidden' }}>
                 <div style={{ overflowX: 'auto' }}>
                     <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                         <thead>
@@ -127,7 +126,7 @@ const AttendancePage = ({ currentUser }) => {
                                                 onClick={() => handleStatusChange(student.id, 'late')}
                                                 icon={Clock}
                                                 label="Late"
-                                                colorVar="--text-light" // Using text-light (slate 400) or maybe orange if defined
+                                                colorVar="--text-light"
                                             />
                                         </div>
                                     </td>
@@ -135,6 +134,45 @@ const AttendancePage = ({ currentUser }) => {
                             ))}
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <div className="mobile-only">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {students.map(student => (
+                        <div key={student.id} className="card">
+                            <div style={{ marginBottom: '1rem' }}>
+                                <div className="font-medium" style={{ fontSize: '1rem' }}>{student.name}</div>
+                                <div className="text-xs text-muted">Parent: {student.parentName}</div>
+                            </div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem' }}>
+                                <StatusButton
+                                    status="present"
+                                    current={attendance[student.id]}
+                                    onClick={() => handleStatusChange(student.id, 'present')}
+                                    icon={CheckCircle}
+                                    label="Present"
+                                    colorVar="--secondary"
+                                />
+                                <StatusButton
+                                    status="absent"
+                                    current={attendance[student.id]}
+                                    onClick={() => handleStatusChange(student.id, 'absent')}
+                                    icon={XCircle}
+                                    label="Absent"
+                                    colorVar="--accent"
+                                />
+                                <StatusButton
+                                    status="late"
+                                    current={attendance[student.id]}
+                                    onClick={() => handleStatusChange(student.id, 'late')}
+                                    icon={Clock}
+                                    label="Late"
+                                    colorVar="--text-light"
+                                />
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

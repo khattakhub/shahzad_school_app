@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import { Send, History, User } from 'lucide-react';
 import { dataStore } from '../data/store';
 import './Dashboard.css';
+import { useToast } from '../context/ToastContext';
 
 const DiaryPage = ({ currentUser }) => {
     const [subject, setSubject] = useState('');
     const [content, setContent] = useState('');
     const [target, setTarget] = useState('all'); // 'all' or studentId
     const [selectedStudent, setSelectedStudent] = useState('');
+    const { addToast } = useToast();
 
     const classId = currentUser?.classId || 'c1';
     const students = dataStore.getStudents(classId);
-    const history = dataStore.getDiaries(classId);
+    // Use state for history to allow updates without reload
+    const [history, setHistory] = useState(dataStore.getDiaries(classId));
 
     const handleSend = (e) => {
         e.preventDefault();
@@ -27,20 +30,21 @@ const DiaryPage = ({ currentUser }) => {
         };
 
         dataStore.sendDiary(entry);
+        addToast('Success', 'Diary entry sent successfully!', 'success');
+
+        // Update local history state
+        setHistory(dataStore.getDiaries(classId));
 
         // Reset form
         setSubject('');
         setContent('');
         setTarget('all');
         setSelectedStudent('');
-
-        // Force refresh (in a real app, use context or query cache)
-        window.location.reload();
     };
 
     return (
         <div className="page-wrapper">
-            <div className="grid-layout" style={{ gridTemplateColumns: '2fr 1fr' }}>
+            <div className="diary-layout">
                 {/* Compose Section */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div className="dashboard-welcome">

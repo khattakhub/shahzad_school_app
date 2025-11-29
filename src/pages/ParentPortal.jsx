@@ -74,6 +74,7 @@ const ParentPortal = ({ currentUser }) => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="card flex-between mb-8"
+                style={{ flexWrap: 'wrap', gap: '1rem' }}
             >
                 <div className="flex-center" style={{ gap: '1rem' }}>
                     <div className="stat-icon-wrapper bg-indigo" style={{ width: '4rem', height: '4rem', borderRadius: '50%', margin: 0 }}>

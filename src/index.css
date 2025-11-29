@@ -135,16 +135,24 @@ p {
   grid-template-columns: repeat(1, 1fr);
 }
 
+.grid-layout-3 {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(1, 1fr);
+}
+
 @media (min-width: 768px) {
   .grid-layout {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-layout-3 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
   .grid-layout-3 {
-    display: grid;
-    gap: 1.5rem;
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -183,24 +191,108 @@ p {
 
 .btn-primary {
   background: var(--primary-gradient);
+  background-size: 200% auto;
   color: white;
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
+  background-position: right center;
   box-shadow: 0 8px 16px rgba(99, 102, 241, 0.35);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .btn-secondary {
   background-color: white;
   border: 1px solid var(--border);
   color: var(--text-main);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: var(--bg-app);
+  transition: width 0.3s ease;
+  z-index: -1;
 }
 
 .btn-secondary:hover {
-  background-color: var(--bg-app);
   border-color: var(--text-muted);
+  color: var(--primary);
+}
+
+.btn-secondary:hover::before {
+  width: 100%;
+}
+
+/* Toast Notification */
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.toast {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.5rem;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 300px;
+  border-left: 4px solid var(--primary);
+  animation: slideIn 0.3s ease forwards;
+  pointer-events: auto;
+}
+
+.toast-success {
+  border-left-color: var(--secondary);
+}
+
+.toast-error {
+  border-left-color: var(--accent);
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  margin-bottom: 0.1rem;
+}
+
+.toast-message {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .btn-ghost {
@@ -362,4 +454,45 @@ p {
 .badge-neutral {
   background: var(--bg-app);
   color: var(--text-muted);
+}
+
+/* Responsive Utilities */
+.hidden {
+  display: none !important;
+}
+
+.block {
+  display: block !important;
+}
+
+@media (min-width: 768px) {
+  .md\:block {
+    display: block !important;
+  }
+
+  .md\:hidden {
+    display: none !important;
+  }
+
+  .md\:flex {
+    display: flex !important;
+  }
+}
+
+.mobile-only {
+  display: block;
+}
+
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none !important;
+  }
+
+  .desktop-only {
+    display: block !important;
+  }
 }

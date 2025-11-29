@@ -7,6 +7,7 @@ import DiaryPage from './pages/DiaryPage';
 import ParentPortal from './pages/ParentPortal';
 import LoginPage from './pages/LoginPage';
 import SetupPage from './pages/SetupPage';
+import { ToastProvider } from './context/ToastContext';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -26,30 +27,32 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={
-          isAuthenticated ? <Navigate to="/" replace /> : <LoginPage onLogin={handleLogin} />
-        } />
+    <ToastProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={
+            isAuthenticated ? <Navigate to="/" replace /> : <LoginPage onLogin={handleLogin} />
+          } />
 
-        <Route path="/" element={
-          isAuthenticated ? <Layout onLogout={handleLogout} role={userRole} /> : <Navigate to="/login" replace />
-        }>
-          <Route index element={
-            userRole === 'parent' ? <Navigate to="/parent" replace /> :
-              userRole === 'admin' ? <Navigate to="/setup" replace /> :
-                <TeacherDashboard currentUser={currentUser} />
-          } />
-          <Route path="attendance" element={<AttendancePage currentUser={currentUser} />} />
-          <Route path="diary" element={<DiaryPage currentUser={currentUser} />} />
-          <Route path="parent" element={<ParentPortal currentUser={currentUser} />} />
-          <Route path="setup" element={
-            userRole === 'admin' ? <SetupPage /> : <Navigate to="/" replace />
-          } />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+          <Route path="/" element={
+            isAuthenticated ? <Layout onLogout={handleLogout} role={userRole} /> : <Navigate to="/login" replace />
+          }>
+            <Route index element={
+              userRole === 'parent' ? <Navigate to="/parent" replace /> :
+                userRole === 'admin' ? <Navigate to="/setup" replace /> :
+                  <TeacherDashboard currentUser={currentUser} />
+            } />
+            <Route path="attendance" element={<AttendancePage currentUser={currentUser} />} />
+            <Route path="diary" element={<DiaryPage currentUser={currentUser} />} />
+            <Route path="parent" element={<ParentPortal currentUser={currentUser} />} />
+            <Route path="setup" element={
+              userRole === 'admin' ? <SetupPage /> : <Navigate to="/" replace />
+            } />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ToastProvider>
   );
 }
 

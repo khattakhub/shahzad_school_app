@@ -246,3 +246,15 @@
 .text-pink {
     color: #ec4899;
 }
+
+.diary-layout {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+    .diary-layout {
+        grid-template-columns: 2fr 1fr;
+    }
+}

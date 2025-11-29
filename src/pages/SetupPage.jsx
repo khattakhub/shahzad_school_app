@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { dataStore } from '../data/store';
 import { Save, Plus, Trash2, School, Users, GraduationCap, UserCog, Baby } from 'lucide-react';
+import { useToast } from '../context/ToastContext';
 import './SetupPage.css';
 
 const SetupPage = () => {
@@ -10,6 +11,7 @@ const SetupPage = () => {
     const [students, setStudents] = useState([]);
     const [teachers, setTeachers] = useState([]);
     const [parents, setParents] = useState([]);
+    const { addToast } = useToast();
 
     // Form States
     const [newClass, setNewClass] = useState('');
@@ -32,7 +34,7 @@ const SetupPage = () => {
     const handleSaveSchool = (e) => {
         e.preventDefault();
         dataStore.saveSchoolInfo(schoolInfo);
-        alert('School info saved!');
+        addToast('Success', 'School info saved!', 'success');
     };
 
     const handleAddClass = (e) => {
@@ -41,6 +43,7 @@ const SetupPage = () => {
         dataStore.addClass({ name: newClass });
         setNewClass('');
         loadData();
+        addToast('Success', 'Class added successfully!', 'success');
     };
 
     const handleAddStudent = (e) => {
@@ -49,6 +52,7 @@ const SetupPage = () => {
         dataStore.addStudent(newStudent);
         setNewStudent({ name: '', classId: '', parentName: '' });
         loadData();
+        addToast('Success', 'Student added successfully!', 'success');
     };
 
     const handleAddTeacher = (e) => {
@@ -57,6 +61,7 @@ const SetupPage = () => {
         dataStore.addTeacher(newTeacher);
         setNewTeacher({ name: '', subject: '', email: '', password: '', classId: '' });
         loadData();
+        addToast('Success', 'Teacher added successfully!', 'success');
     };
 
     const handleAddParent = (e) => {
@@ -73,6 +78,7 @@ const SetupPage = () => {
         dataStore.addParent(parentData);
         setNewParent({ name: '', email: '', password: '', studentId: '' });
         loadData();
+        addToast('Success', 'Parent account created!', 'success');
     };
 
     const tabs = [

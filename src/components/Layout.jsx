@@ -14,8 +14,17 @@ const SidebarItem = ({ to, icon: Icon, label }) => (
     </NavLink>
 );
 
+const BottomNavItem = ({ to, icon: Icon, label }) => (
+    <NavLink
+        to={to}
+        className={({ isActive }) => `bottom-nav-item ${isActive ? 'active' : ''}`}
+    >
+        <Icon size={24} />
+        <span>{label}</span>
+    </NavLink>
+);
+
 const Layout = ({ onLogout, role }) => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [schoolName, setSchoolName] = useState('SchoolApp');
     const location = useLocation();
 
@@ -25,11 +34,6 @@ const Layout = ({ onLogout, role }) => {
             setSchoolName(info.name);
         }
     }, []);
-
-    // Close mobile menu on route change
-    useEffect(() => {
-        setIsMobileMenuOpen(false);
-    }, [location]);
 
     return (
         <div className="layout-container">
@@ -90,37 +94,10 @@ const Layout = ({ onLogout, role }) => {
                 {/* Mobile Header */}
                 <header className="mobile-header">
                     <h1 className="app-logo" style={{ fontSize: '1.25rem' }}>{schoolName}</h1>
-                    <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="menu-btn">
-                        {isMobileMenuOpen ? <X /> : <Menu />}
+                    <button onClick={onLogout} className="menu-btn" aria-label="Logout">
+                        <LogOut size={20} />
                     </button>
                 </header>
-
-                {/* Mobile Menu Overlay */}
-                {isMobileMenuOpen && (
-                    <div className="mobile-menu-overlay">
-                        <nav className="sidebar-nav">
-                            {role === 'teacher' && (
-                                <>
-                                    <SidebarItem to="/" icon={LayoutDashboard} label="Dashboard" />
-                                    <SidebarItem to="/attendance" icon={CalendarCheck} label="Attendance" />
-                                    <SidebarItem to="/diary" icon={BookOpen} label="Diary" />
-                                </>
-                            )}
-                            {role === 'admin' && (
-                                <SidebarItem to="/setup" icon={Settings} label="Setup School" />
-                            )}
-                            <SidebarItem to="/parent" icon={Users} label="Parent Portal" />
-                            <button
-                                onClick={onLogout}
-                                className="logout-btn"
-                                style={{ marginTop: '1rem', justifyContent: 'center' }}
-                            >
-                                <LogOut size={20} />
-                                Sign Out
-                            </button>
-                        </nav>
-                    </div>
-                )}
 
                 {/* Main Content */}
                 <main className="content-scroll">
@@ -128,6 +105,21 @@ const Layout = ({ onLogout, role }) => {
                         <Outlet />
                     </div>
                 </main>
+
+                {/* Bottom Navigation - Mobile */}
+                <nav className="bottom-nav">
+                    {role === 'teacher' && (
+                        <>
+                            <BottomNavItem to="/" icon={LayoutDashboard} label="Home" />
+                            <BottomNavItem to="/attendance" icon={CalendarCheck} label="Attendance" />
+                            <BottomNavItem to="/diary" icon={BookOpen} label="Diary" />
+                        </>
+                    )}
+                    {role === 'admin' && (
+                        <BottomNavItem to="/setup" icon={Settings} label="Setup" />
+                    )}
+                    <BottomNavItem to="/parent" icon={Users} label="Parents" />
+                </nav>
             </div>
         </div>
     );
