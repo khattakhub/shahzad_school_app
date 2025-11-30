@@ -46,16 +46,19 @@ const AttendancePage = ({ currentUser }) => {
                 onClick={onClick}
                 className="btn"
                 style={{
-                    padding: '0.5rem 0.75rem',
+                    padding: '0.75rem 1rem',
                     fontSize: '0.875rem',
                     gap: '0.5rem',
                     backgroundColor: isActive ? `var(${colorVar})` : 'white',
                     color: isActive ? 'white' : 'var(--text-muted)',
                     border: isActive ? 'none' : '1px solid var(--border)',
-                    boxShadow: isActive ? 'var(--shadow-sm)' : 'none'
+                    boxShadow: isActive ? 'var(--shadow-sm)' : 'none',
+                    flex: 1,
+                    minHeight: '44px',
+                    justifyContent: 'center'
                 }}
             >
-                <Icon size={16} />
+                <Icon size={18} />
                 <span>{label}</span>
             </button>
         );
